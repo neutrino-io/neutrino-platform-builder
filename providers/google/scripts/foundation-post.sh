@@ -12,13 +12,14 @@ then
     exit 0
 fi
 
-## Check if gcloud is authenticated
-#if ! gcloud auth list --format='value(account)' --quiet
-#then
-#    echo "$(tput setaf 1)[ERROR] $(tput setaf 7)gcloud is not authenticated, exiting.."
-#    exit 0
-#fi
-#
+# Check if gcloud is authenticated
+GCLOUD_AUTH=$(gcloud auth list --filter-account $ACCOUNT_EMAIL --format='value(account)' --quiet)
+if [ "$GCLOUD_AUTH" != "$ACCOUNT_EMAIL" ]
+then
+    echo "$(tput setaf 1)[ERROR] $(tput setaf 7)gcloud is not authenticated, exiting.."
+    exit 0
+fi
+
 ## Check if gcloud is configured
 #if ! gcloud config list --format='value(core.project)' --quiet
 #then
